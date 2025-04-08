@@ -1,0 +1,6 @@
+.teamContainer{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+    gap: 200px;
+    padding: 150px;
+}
