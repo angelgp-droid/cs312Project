@@ -13,5 +13,11 @@ export class AboutComponent {
     name:'Name placeholder',
     bio:'Bio placeholder',
     photoURL:'personPlaceholder.jpg'
-  }
+  };
+  angel={
+    name:'Angel Gonzalez Portillo',
+    bio:'CS major',
+    photoURL:'personPlaceholder.jpg'
+  };
+  
 }
