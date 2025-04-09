@@ -1,28 +1,36 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ColorTableComponent } from '../../color-table/color-table.component';
 
 @Component({
   selector: 'app-homepage',
   standalone:true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, ColorTableComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
 //resource used https://angular.dev/guide/forms#
-  rows: number | null = null;
-  columns: number | null = null;
-  color: number | null = null;
+  rows: number = 0;
+  columns: number = 0;
+  color: number = 0;
   rowIsSubmitted = false;
   colIsSubmitted = false;
   colorIsSubmitted = false;
+  showColorTable = true;
   rowSubmitCount = 0;
   colorSubmitCount = 0;
   colSubmitCount = 0;
 
   generateColorTable(){
-    if(this.colSubmitCount > 0){
+    if(this.colSubmitCount > 0 && this.isColorValid()){
+      const colorTable = [];
+      for(let i = 0; i < this.color; i++){
+        
+      }
+      this.showColorTable = true;
+
 
     }
   }
@@ -71,6 +79,7 @@ export class HomepageComponent {
   onColorSubmit() {
     this.colorIsSubmitted = true;
     this.colorSubmitCount++;
+    this.generateColorTable();
   }
 
 

@@ -57,4 +57,12 @@
  
   </form>
   
+
+  @if (showColorTable) {
+    <div class="colorTable">
+      <h4>Color Selection Table</h4>
+      <p>Table with {{color}} colors</p>
+      <app-color-table [colorCount]="color"></app-color-table>
+    </div>
+  }
   
