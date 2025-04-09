@@ -16,8 +16,8 @@ export class AboutComponent {
   };
   angel={
     name:'Angel Gonzalez Portillo',
-    bio:'CS major',
-    photoURL:'assets/personPlaceholder.jpg'
+    bio:'I am a CS major in my third-year with the general concentration. In my free time I like to play video games as well as going on hikes and watching TV.',
+    photoURL:'assets/angelPic.jpeg'
   };
   nate={
     name:'Nate Barton',
