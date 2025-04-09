@@ -19,5 +19,9 @@ export class AboutComponent {
     bio:'CS major',
     photoURL:'assets/personPlaceholder.jpg'
   };
-  
+  nate={
+    name:'Nate Barton',
+    bio:'I am a fourth-year computer science student with a general concentration. Outside of class, I enjoy video games, working out, and cooking.',
+    photoURL: 'assets/NatePic.jpg'
+  };
 }

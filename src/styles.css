@@ -14,3 +14,10 @@ body {
     font-weight: 400;
     line-height: 1.5;
 }
+
+.memberPhoto {
+    display: block;
+    width: 350px;
+    height: 400px;
+    margin: 0 auto;
+}
