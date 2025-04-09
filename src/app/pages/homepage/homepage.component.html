@@ -1,1 +1,59 @@
 <p>homepage works!</p>
+<form (ngSubmit)="onRowSubmit()">
+    <label>
+      Rows (1-1000):
+      <input 
+        type="number" 
+        name="rows"
+        [(ngModel)]="rows"
+        [class.invalid]="!isRowValid()"
+      >
+    </label>
+    <button type="rowSubmit">Submit </button>
+    @if (!isRowValid()) {
+        <div class="error">
+            Invalid input! Try again make sure to enter a whole number between 1-1000
+        </div>
+      }
+ 
+  </form>
+
+  <form (ngSubmit)="onColSubmit()">
+    <label>
+      Columns (1-1000):
+      <input 
+        type="number" 
+        name="columns"
+        [(ngModel)]="columns"
+        [class.invalid]="!isColValid()"
+      >
+    </label>
+    <button type="colSubmit">Submit </button>
+    @if (!isColValid()) {
+        <div class="error">
+            Invalid input! Try again make sure to enter a whole number between 1-702
+        </div>
+      }
+ 
+  </form>
+
+  <form (ngSubmit)="onColorSubmit()">
+    <label>
+      Color (1-10):
+      <input 
+        type="number" 
+        name="color"
+        [(ngModel)]="color"
+        [class.invalid]="!isColorValid()"
+      >
+    </label>
+    <button type="colorSubmit">Submit </button>
+    @if (!isColorValid()) {
+        <div class="error">
+            Invalid input! Try again make sure to enter a whole number between 1-10
+        </div>
+      }
+ 
+  </form>
+  
+  
