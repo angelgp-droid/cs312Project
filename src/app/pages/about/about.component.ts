@@ -12,12 +12,12 @@ export class AboutComponent {
   teamMember ={
     name:'Name placeholder',
     bio:'Bio placeholder',
-    photoURL:'personPlaceholder.jpg'
+    photoURL:'assets/personPlaceholder.jpg'
   };
   angel={
     name:'Angel Gonzalez Portillo',
     bio:'CS major',
-    photoURL:'personPlaceholder.jpg'
+    photoURL:'assets/personPlaceholder.jpg'
   };
   
 }
