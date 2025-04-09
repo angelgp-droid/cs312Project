@@ -1,0 +1,25 @@
+.navbar{
+    list-style-type: none;
+    margin: auto;
+    padding: auto;
+    overflow: hidden;
+    background-color:#ffc0cb;
+}
+.navItem{
+    list-style-type: none;
+    float:left;
+}
+.navItem a {
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.navItem a:hover{
+    color:#ffff00;
+}
+.navItem a.active {
+    font-weight: bold;
+    color: #000080;
+    border-bottom: 2px solid #000080;
+}
