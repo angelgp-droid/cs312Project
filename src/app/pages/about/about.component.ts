@@ -12,7 +12,7 @@ export class AboutComponent {
   Matthew ={
     name:'Matthew Schimmel',
     bio:'A senior C.S. Student from Kansas City, I like the outdoors, chess, and philosophy.',
-    photoURL:''
+    photoURL:'assets/MattPic.jpeg'
   };
   angel={
     name:'Angel Gonzalez Portillo',
