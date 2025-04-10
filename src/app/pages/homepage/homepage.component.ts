@@ -22,6 +22,14 @@ export class HomepageComponent {
   rowSubmitCount = 0;
   colorSubmitCount = 0;
   colSubmitCount = 0;
+//makes it if user changes input to invalid it will hide the table again
+  shouldShowColorTable(): boolean {
+    return this.showColorTable && 
+           this.isColorValid() && 
+           this.color !== null && 
+           this.color >= 1 && 
+           this.color <= 10;
+  }
 
   generateColorTable(){
     if(this.colorSubmitCount > 0 && this.isColorValid()){
