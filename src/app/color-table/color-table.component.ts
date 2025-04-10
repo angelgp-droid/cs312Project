@@ -11,6 +11,22 @@ import { FormsModule } from '@angular/forms';
 })
 export class ColorTableComponent {
   @Input() colorCount = 0;
-  colors: string[] = [ 'red', 'orange', 'yellow', 'green', 'blue','purple', 'pink', 'brown', 'black', 'teal'];
-  
+  colors: string[] = [
+    'black',
+    'blue',
+    'brown',
+    'green',
+    'orange',
+    'pink',
+    'purple',
+    'red',
+    'teal',
+    'yellow'
+  ];
+  get rows(){
+    const emptyArray = new Array(this.colorCount);
+    const filledArray = emptyArray.fill(0);
+    const rowsArray = filledArray.map((value, index) => index);
+    return rowsArray;
+  }
 }

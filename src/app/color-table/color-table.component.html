@@ -1,7 +1,21 @@
-<div class="colorTableContainer"> 
-    <table class="colorTable"> 
-        <tbody>
-
-        </tbody>
+<div class="colorTableContainer">
+    <table class="colorTable">
+      <tbody>
+        @for (i of rows; track i) {
+          <tr>
+            <td class="leftColumn">
+            <!-- [checked] auto selects/checks the first row radio button
+            source: https://stackoverflow.com/questions/51997557/verify-if-an-input-checkbox-is-checked-in-angular2 --> 
+              <input type="radio" name="selectedColor" [checked]="i === 0">
+              <select>
+                @for (color of colors; track color) {
+                  <option [value]="color">{{color}}</option>
+                }
+              </select>
+            </td>
+            <td class="rightColumn"></td>
+          </tr>
+        }
+      </tbody>
     </table>
-</div>
+  </div>
