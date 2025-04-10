@@ -1,15 +1,16 @@
 <!--Resource used https://angular.dev/api/forms/NgModel --> 
-<p>homepage works!</p>
+<!--Go to http://localhost:4200/ --> 
+<!--<p>check: homepage works!</p>-->
 <form (ngSubmit)="onRowSubmit()">
     <label>
       Rows (1-1000):
+    </label>
       <input 
         type="number" 
         name="rows"
         [(ngModel)]="rows"
         [class.invalid]="!isRowValid()"
       >
-    </label>
     <button type="rowSubmit">Submit </button>
     @if (!isRowValid()) {
         <div class="error">
@@ -21,15 +22,15 @@
 
   <form (ngSubmit)="onColSubmit()">
     <label>
-      Columns (1-1000):
+      Columns (1-702):
+    </label>
       <input 
         type="number" 
         name="columns"
         [(ngModel)]="columns"
         [class.invalid]="!isColValid()"
       >
-    </label>
-    <button type="colSubmit">Submit </button>
+      <button type="colSubmit">Submit </button>
     @if (!isColValid()) {
         <div class="error">
             Invalid input! Try again make sure to enter a whole number between 1-702
@@ -41,13 +42,13 @@
   <form (ngSubmit)="onColorSubmit()">
     <label>
       Color (1-10):
+    </label>
       <input 
         type="number" 
         name="color"
         [(ngModel)]="color"
         [class.invalid]="!isColorValid()"
       >
-    </label>
     <button type="colorSubmit">Submit </button>
     @if (!isColorValid()) {
         <div class="error">
