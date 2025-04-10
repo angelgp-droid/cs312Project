@@ -9,10 +9,10 @@ import { TeamCardComponent } from '../../../team-card/team-card.component';
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
-  teamMember ={
-    name:'Name placeholder',
-    bio:'Bio placeholder',
-    photoURL:'assets/personPlaceholder.jpg'
+  Matthew ={
+    name:'',
+    bio:'',
+    photoURL:''
   };
   angel={
     name:'Angel Gonzalez Portillo',
