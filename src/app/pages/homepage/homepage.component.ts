@@ -1,29 +1,39 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ColorTableComponent } from '../../color-table/color-table.component';
 
 @Component({
   selector: 'app-homepage',
   standalone:true,
-  imports: [FormsModule,CommonModule],
+  imports: [FormsModule,CommonModule, ColorTableComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })
 export class HomepageComponent {
 //resource used https://angular.dev/guide/forms#
-  rows: number | null = null;
-  columns: number | null = null;
-  color: number | null = null;
+  rows: number = 0;
+  columns: number = 0;
+  color: number = 0;
   rowIsSubmitted = false;
   colIsSubmitted = false;
   colorIsSubmitted = false;
+  showColorTable = false;
   rowSubmitCount = 0;
   colorSubmitCount = 0;
   colSubmitCount = 0;
+//makes it if user changes input to invalid it will hide the table again
+  shouldShowColorTable(): boolean {
+    return this.showColorTable && 
+           this.isColorValid() && 
+           this.color !== null && 
+           this.color >= 1 && 
+           this.color <= 10;
+  }
 
   generateColorTable(){
-    if(this.colSubmitCount > 0){
-
+    if(this.colorSubmitCount > 0 && this.isColorValid()){
+      this.showColorTable = true;
     }
   }
 
@@ -71,6 +81,7 @@ export class HomepageComponent {
   onColorSubmit() {
     this.colorIsSubmitted = true;
     this.colorSubmitCount++;
+    this.generateColorTable();
   }
 
 

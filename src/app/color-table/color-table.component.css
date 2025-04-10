@@ -1,0 +1,14 @@
+ /* checked for contrast #ffff00 and #000080 have a 14.9:1*/
+.colorTable{
+    background-color: #ffff00;
+    width: 90%;
+    border: 1px solid #000080;
+}
+.leftColumn{
+    width: 20%;
+    border: 1px solid #000080;
+}
+.rightColumn{
+    width: 80%;
+    border: 1px solid #000080;
+}
