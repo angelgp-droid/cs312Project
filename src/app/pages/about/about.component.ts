@@ -10,8 +10,8 @@ import { TeamCardComponent } from '../../../team-card/team-card.component';
 })
 export class AboutComponent {
   Matthew ={
-    name:'',
-    bio:'',
+    name:'Matthew Schimmel',
+    bio:'A senior C.S. Student from Kansas City, I like the outdoors, chess, and philosophy.',
     photoURL:''
   };
   angel={
