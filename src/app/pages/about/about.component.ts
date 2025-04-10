@@ -24,4 +24,9 @@ export class AboutComponent {
     bio:'I am a fourth-year computer science student with a general concentration. Outside of class, I enjoy video games, working out, and cooking.',
     photoURL: 'assets/NatePic.jpg'
   };
+  german ={
+    name:'German Gutierrez Erives',
+    bio:'I am a senior majoring in neuroscience and minoring in computer science. I love playing the accordion, producing music, and playing 8 ball.',
+    photoURL:'assets/GermanPic.png'
+  };
 }
