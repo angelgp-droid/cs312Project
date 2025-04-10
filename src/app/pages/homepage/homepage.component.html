@@ -8,6 +8,8 @@
       <input 
         type="number" 
         name="rows"
+        min = 1
+        max = 1000
         [(ngModel)]="rows"
         [class.invalid]="!isRowValid()"
       >
@@ -27,6 +29,8 @@
       <input 
         type="number" 
         name="columns"
+        min = 1
+        max = 702
         [(ngModel)]="columns"
         [class.invalid]="!isColValid()"
       >
@@ -46,6 +50,8 @@
       <input 
         type="number" 
         name="color"
+        min = 1
+        max = 10
         [(ngModel)]="color"
         [class.invalid]="!isColorValid()"
       >
