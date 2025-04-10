@@ -11,8 +11,8 @@ import { TeamCardComponent } from '../../../team-card/team-card.component';
 export class AboutComponent {
   matt ={
     name:'Matthew Schimmel',
-    bio:'A senior C.S. Student from Kansas City, I like the outdoors, chess, and philosophy.',
-    photoURL:'assets/MattPic.jpeg'
+    bio:'A senior C.S. Student from Kansas City, I like the outdoors, exercise, chess, and philosophy, as well as classical literature. In the past, I am also an amateur game developer and modder.',
+    photoURL:'assets/MattPic.jpg'
   };
   angel={
     name:'Angel Gonzalez Portillo',
