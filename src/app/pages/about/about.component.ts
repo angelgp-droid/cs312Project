@@ -9,7 +9,7 @@ import { TeamCardComponent } from '../../../team-card/team-card.component';
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
-  Matthew ={
+  matt ={
     name:'Matthew Schimmel',
     bio:'A senior C.S. Student from Kansas City, I like the outdoors, chess, and philosophy.',
     photoURL:'assets/MattPic.jpeg'
