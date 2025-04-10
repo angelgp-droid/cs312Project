@@ -18,20 +18,14 @@ export class HomepageComponent {
   rowIsSubmitted = false;
   colIsSubmitted = false;
   colorIsSubmitted = false;
-  showColorTable = true;
+  showColorTable = false;
   rowSubmitCount = 0;
   colorSubmitCount = 0;
   colSubmitCount = 0;
 
   generateColorTable(){
-    if(this.colSubmitCount > 0 && this.isColorValid()){
-      const colorTable = [];
-      for(let i = 0; i < this.color; i++){
-        
-      }
+    if(this.colorSubmitCount > 0 && this.isColorValid()){
       this.showColorTable = true;
-
-
     }
   }
 
