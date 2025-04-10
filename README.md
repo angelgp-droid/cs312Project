@@ -5,12 +5,18 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 ## Development server
 
 To start a local development server, run:
-
 ```bash
+module unload courses
 module load courses/cs312
+npm install
+ng serve -o
+```
+to host remotely and continually, ssh into a machine and run:
+```bash
+tmux
 ng serve
 ```
-
+this will keep the server running for a desired period of time. make sure to logout when you are done hosting to preserve resources.
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
 ## Code scaffolding
