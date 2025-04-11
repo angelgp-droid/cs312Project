@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 //resource using for ... spread syntax 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-export class ColorTableComponent implements OnChanges {
+export class ColorTableComponent{
   @Input() colorCount = 0;
   usedColors: Set<string> = new Set();
   selectedColors: string[] = [];
