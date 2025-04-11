@@ -16,7 +16,7 @@
     text-decoration: none;
 }
 .navItem a:hover{
-    color:#ffff00;
+    color:var(--color-over-pink);
 }
 .navItem a.active {
     font-weight: bold;
