@@ -71,5 +71,13 @@
     </div>
   }
 
+  @if (rowIsSubmitted && colIsSubmitted && isRowValid() && isColValid()){
+    <div class="paintingTableContainer">
+      <h4>Color Painting Table</h4>
+      <p>Table with {{ rows }} Rows and {{ columns }} Columns</p>
+      <app-paint-table [rows]="rows" [columns]="columns"></app-paint-table>
+    </div>
+  }
+
   <app-print-button></app-print-button>  
 

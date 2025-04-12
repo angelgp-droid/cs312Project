@@ -1,1 +1,17 @@
-<p>paint-table works!</p>
+<table class="painting-table">
+  <thead>
+    <tr>
+      <th class="corner-label"></th>
+      <th *ngFor="let label of columnLabels" class="col-label">{{ label }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rowIndex of createArray(rows); let rowIndexes = index">
+      <td class="row-label">{{ rowIndex + 1 }}</td>
+      <td *ngFor="let colIndex of createArray(columns); let colIndexes = index"
+          (click)="cellClicked(rowIndex + 1, colIndex + 1)"
+          class="painting-cell">
+      </td>
+    </tr>
+  </tbody>
+</table>
