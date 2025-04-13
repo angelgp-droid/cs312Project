@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ColorTableComponent } from '../../color-table/color-table.component';
 import { PrintButtonComponent } from '../../print-button/print-button.component';
+import { PaintTableComponent } from '../../paint-table/paint-table.component';
 
 @Component({
   selector: 'app-homepage',
   standalone:true,
-  imports: [FormsModule,CommonModule, ColorTableComponent, PrintButtonComponent],
+  imports: [FormsModule,CommonModule, ColorTableComponent, PrintButtonComponent, PaintTableComponent],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
 })

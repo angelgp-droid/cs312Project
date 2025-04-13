@@ -1,0 +1,32 @@
+.painting-table{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.painting-table th,
+.painting-table td{
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+.col-label,
+.row-label{
+    background-color: var(--primary-color);
+    font-weight: bold;
+    color: white;
+    border: 1px solid white;
+}
+
+.corner-label{
+    background-color: var(--color-over-pink);
+}
+
+.painting-cell{
+    cursor: pointer;
+}
+
+.painting-cell:hover{
+    background-color: #e0e0e0;
+}
