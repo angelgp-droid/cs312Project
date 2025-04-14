@@ -1,5 +1,7 @@
 button{
-    background-color: var(--tertiary-color);;
+    background-color: var(--tertiary-color);
+    padding-left: 20px;
+    padding-right: 20px;
 }
 button:hover{
     background-color: var(--primary-color);

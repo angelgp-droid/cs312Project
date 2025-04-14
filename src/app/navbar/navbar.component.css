@@ -4,16 +4,22 @@
     padding: auto;
     overflow: hidden;
     background-color:#ffc0cb;
+    display: flex;
+    align-items: center;
+    height: 150px;
+    margin-bottom: 10px;
 }
 .navItem{
     list-style-type: none;
     float:left;
+    align-items: center;
 }
 .navItem a {
     display: block;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    align-items: center;
 }
 .navItem a:hover{
     color:var(--color-over-pink);
@@ -23,3 +29,17 @@
     color: #000080;
     border-bottom: 2px solid #000080;
 }
+
+.navbarLinks {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.companyLogo {
+    height: 200px;
+    width: 200px;
+    margin-right: 1rem;
+    padding: 0;
+  }
