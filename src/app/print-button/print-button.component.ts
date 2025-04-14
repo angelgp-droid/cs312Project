@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './print-button.component.css'
 })
 export class PrintButtonComponent {
-
+  printPage(): void {
+    window.print();
+  }
 }

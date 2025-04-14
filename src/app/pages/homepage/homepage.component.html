@@ -1,6 +1,8 @@
 <!--Resource used https://angular.dev/api/forms/NgModel --> 
 <!--Go to http://localhost:4200/ --> 
 <!--<p>check: homepage works!</p>-->
+
+<div class = "form-controls">
 <form (ngSubmit)="onRowSubmit()">
     <label>
       Rows (1-1000):
@@ -62,22 +64,23 @@
       }
  
   </form>
+</div>
   
-  @if (shouldShowColorTable()) {
-    <div class="colorTable">
-      <h4>Color Selection Table</h4>
-      <p>Table with {{color}} colors</p>
+
+@if (shouldShowColorTable()) {
+      <h4 class = "print-visible">Color Selection Table</h4>
+      <p class = "print-visible">Table with {{color}} colors</p>
+    <div class="colorTable">  
       <app-color-table [colorCount]="color"></app-color-table>
     </div>
   }
 
   @if (rowIsSubmitted && colIsSubmitted && isRowValid() && isColValid()){
-    <div class="paintingTableContainer">
-      <h4>Color Painting Table</h4>
-      <p>Table with {{ rows }} Rows and {{ columns }} Columns</p>
+      <h4 class = "print-visible">Color Painting Table</h4>
+      <p class = "print-visible">Table with {{ rows }} Rows and {{ columns }} Columns</p>
+    <div class="paintingTableContainer">  
       <app-paint-table [rows]="rows" [columns]="columns"></app-paint-table>
     </div>
   }
-
   <app-print-button></app-print-button>  
 
