@@ -26,3 +26,25 @@ body {
     height: 400px;
     margin: 0 auto;
 }
+
+@media print {
+    body {
+        filter: grayscale();
+    }
+
+    table {
+        page-break-inside: avoid;
+    }
+
+    .form-controls {
+        display: none; 
+    }
+
+    .colorTable {
+        display: none;
+    }
+
+    .print-visible {
+        display: block;
+    }
+}
