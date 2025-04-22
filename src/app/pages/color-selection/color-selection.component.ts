@@ -7,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './color-selection.component.css'
 })
 export class ColorSelectionComponent {
-
+  
 }
