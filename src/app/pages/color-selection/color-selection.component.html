@@ -1,0 +1,46 @@
+<div class="color-selection">
+    <h2>Color Selection</h2>
+  
+    <form (ngSubmit)="addColor()" class="color-form">
+      <h3>Add New Color</h3>
+      <div class="form-group">
+        <label for="newColorInput">Color Name:</label>
+        <input type="text" id="newColorInput" 
+               [(ngModel)]="newColor" 
+               name="newColor"
+               placeholder="Enter color name"
+               required>
+        <button type="submit" class="add-button">Add Color</button>
+      </div>
+    </form>
+
+    <form (ngSubmit)="removeColor(selectedColorToRemove)" class="color-form">
+        <h3>Remove Color</h3>
+        <div class="form-group">
+          <label for="colorToRemove">Select Color to Remove:</label>
+          <select id="colorToRemove"
+                  [(ngModel)]="selectedColorToRemove"
+                  name="selectedColorToRemove"
+                  required
+                  class="form-select">
+            @for (color of colors; track color) {
+              <option [value]="color">{{color}}</option>
+            }
+          </select>
+          <button type="submit" class="remove-button">Remove Color</button>
+        </div>
+      </form>
+  
+    <div class="color-list">
+        <h3>Available Colors</h3>
+        <ul>
+          @for (color of colors; track color) {
+            <li>
+              <div class="color-item">
+                <span class="color-name">{{color}}</span>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+  </div>
