@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-paint-table',
@@ -11,6 +11,7 @@ import { Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 export class PaintTableComponent implements OnChanges{
   @Input() rows: number = 0;
   @Input() columns: number = 0;
+  @Output() cellSelected = new EventEmitter<string>();
 
   columnLabels: string[] = [];
 
@@ -38,13 +39,16 @@ export class PaintTableComponent implements OnChanges{
     }
     return result;
   }
-
+  
   cellClicked(row: number, colIndex: number){
     const colLabel = this.columnLabels[colIndex - 1];
-    alert(`${colLabel}${row}`);
+    const cellId = `${colLabel}${row}`;
+    this.cellSelected.emit(cellId);
   }
 
   createArray(length: number): number[] {
     return Array.from({ length }, (_, i) => i);
   }
+
+  
 }
