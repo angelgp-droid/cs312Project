@@ -1,7 +1,9 @@
-import { Component, Input, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaintTableComponent } from '../paint-table/paint-table.component';
+import { SharedStateService } from '../shared-state.service';
+
 
 @Component({
   selector: 'app-color-table',
@@ -13,10 +15,16 @@ import { PaintTableComponent } from '../paint-table/paint-table.component';
 //resource using for ... spread syntax 
 //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
 export class ColorTableComponent{
+  @Input() columns = 0;
   @Input() colorCount = 0;
   usedColors: Set<string> = new Set();
   selectedColors: string[] = [];
   availableColors: string[] = [];
+  selectedCells: string[][] = [];
+  activeRowIndex: number = 0;
+  constructor(private sharedState: SharedStateService) {}
+
+
   allColors: string[] = [
     'black',
     'blue',
@@ -30,6 +38,18 @@ export class ColorTableComponent{
     'yellow'
   ];
 
+  ngOnInit() {
+    this.sharedState.selectedCell$.subscribe(cell => {
+      if (cell) {
+        const activeRow = this.selectedCells[this.activeRowIndex];
+        if (!activeRow.includes(cell)) {
+          activeRow.push(cell);
+        }
+        console.log('selectedCells:', this.selectedCells);
+      }
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['colorCount']) {
       this.initializeSelectedColors();
@@ -41,6 +61,7 @@ export class ColorTableComponent{
     // Reset previous values
     this.usedColors = new Set();
     this.selectedColors = [];
+    this.selectedCells = new Array(this.colorCount).fill(null).map(() => []);
 
     for (let i = 0; i < this.colorCount; i++) {
       const availableColor = this.nextAvailableColor();
@@ -109,5 +130,9 @@ export class ColorTableComponent{
 
   get rows() {
     return Array.from({ length: this.colorCount }, (_, i) => i);
+  }
+
+  onSelectRow(index: number) {
+    this.activeRowIndex = index;
   }
 }
