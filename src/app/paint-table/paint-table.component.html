@@ -1,17 +1,24 @@
 <table class="painting-table">
   <thead>
     <tr>
-      <th class="corner-label"></th>
-      <th *ngFor="let label of columnLabels" class="col-label">{{ label }}</th>
+      <th class="corner-label"></th> >
+      @for (colLabel of columnLabels; track colLabel) {
+        <th class="col-label">{{ colLabel }}</th>
+      }
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let rowIndex of createArray(rows); let rowIndexes = index">
-      <td class="row-label">{{ rowIndex + 1 }}</td>
-      <td *ngFor="let colIndex of createArray(columns); let colIndexes = index"
-          (click)="cellClicked(rowIndex + 1, colIndex + 1)"
-          class="painting-cell">
-      </td>
-    </tr>
+    @for (row of createArray(rows); track row) {
+      <tr>
+        <th class="row-label">{{ row + 1 }}</th> 
+        @for (colIndex of createArray(columns); track colIndex) {
+          <td 
+            class="painting-cell"
+            (click)="cellClicked(row + 1, colIndex + 1)"
+            [style.background-color]="getCellColor(columnLabels[colIndex] + (row + 1))">
+          </td>
+        }
+      </tr>
+    }
   </tbody>
 </table>
