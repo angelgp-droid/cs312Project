@@ -5,12 +5,27 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedStateService {
-  //shared service source: https://medium.com/@navneetskahlon/angular-communication-between-components-using-a-shared-service-394cb6201b19
-  // and for rxjs https://angular.dev/ecosystem/rxjs-interop
-  private selectedCellSource = new BehaviorSubject<string | null>(null);
+  private selectedCellSource = new BehaviorSubject<{ cell: string, color: string } | null>(null);
   selectedCell$ = this.selectedCellSource.asObservable();
 
-  selectCell(cellId: string) {
-    this.selectedCellSource.next(cellId);
+  private activeColorSource = new BehaviorSubject<string>('white');
+
+  private colorUpdateSource = new BehaviorSubject<{ oldColor: string, newColor: string } | null>(null);
+  colorUpdate$ = this.colorUpdateSource.asObservable();
+
+  selectCell(cell: string, color: string) {
+    this.selectedCellSource.next({ cell, color });
+  }
+
+  setActiveColor(color: string) {
+    this.activeColorSource.next(color);
+  }
+
+  getActiveColor(): string {
+    return this.activeColorSource.getValue();
+  }
+
+  updateColor(oldColor: string, newColor: string) {
+    this.colorUpdateSource.next({ oldColor, newColor });
   }
 }

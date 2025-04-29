@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { PaintTableComponent } from '../paint-table/paint-table.component';
 import { SharedStateService } from '../shared-state.service';
 
-
 @Component({
   selector: 'app-color-table',
   standalone: true,
@@ -12,9 +11,7 @@ import { SharedStateService } from '../shared-state.service';
   templateUrl: './color-table.component.html',
   styleUrl: './color-table.component.css'
 })
-//resource using for ... spread syntax 
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
-export class ColorTableComponent{
+export class ColorTableComponent {
   @Input() columns = 0;
   @Input() colorCount = 0;
   usedColors: Set<string> = new Set();
@@ -22,30 +19,21 @@ export class ColorTableComponent{
   availableColors: string[] = [];
   selectedCells: string[][] = [];
   activeRowIndex: number = 0;
+
   constructor(private sharedState: SharedStateService) {}
 
-
   allColors: string[] = [
-    'black',
-    'blue',
-    'brown',
-    'green',
-    'orange',
-    'pink',
-    'purple',
-    'red',
-    'teal',
-    'yellow'
+    'black', 'blue', 'brown', 'green', 'orange', 'pink', 'purple', 'red', 'teal', 'yellow'
   ];
 
   ngOnInit() {
-    this.sharedState.selectedCell$.subscribe(cell => {
-      if (cell) {
+    this.sharedState.selectedCell$.subscribe(selection => {
+      if (selection) {
+        const { cell } = selection;
         const activeRow = this.selectedCells[this.activeRowIndex];
         if (!activeRow.includes(cell)) {
           activeRow.push(cell);
         }
-        console.log('selectedCells:', this.selectedCells);
       }
     });
   }
@@ -58,7 +46,6 @@ export class ColorTableComponent{
   }
 
   initializeSelectedColors() {
-    // Reset previous values
     this.usedColors = new Set();
     this.selectedColors = [];
     this.selectedCells = new Array(this.colorCount).fill(null).map(() => []);
@@ -77,16 +64,24 @@ export class ColorTableComponent{
 
   onColorChange(index: number, newColor: string) {
     const oldColor = this.selectedColors[index];
-
+  
     this.selectedColors = [...this.selectedColors];
     this.selectedColors[index] = newColor;
-
+  
     this.usedColors.delete(oldColor);
     this.usedColors = new Set(this.usedColors);
     this.usedColors.add(newColor);
-
+  
     this.rebalanceColors();
     this.updateAvailableColors();
+  
+    // Notify shared state about color update
+    this.sharedState.updateColor(oldColor, newColor);
+  
+    // 🔥 ALSO: if the edited row is active, update the active color!
+    if (this.activeRowIndex === index) {
+      this.sharedState.setActiveColor(newColor);
+    }
   }
 
   rebalanceColors() {
@@ -108,7 +103,6 @@ export class ColorTableComponent{
   }
 
   isColorAvailable(color: string, index: number): boolean {
-    //allow already selected color to stay enabled
     if (this.selectedColors[index] === color) return true;
     return !this.usedColors.has(color);
   }
@@ -119,12 +113,10 @@ export class ColorTableComponent{
         return color;
       }
     }
-    //default to the first color 
     return this.allColors[0];
   }
 
   updateAvailableColors() {
-    this.availableColors = this.allColors.filter(color => !this.usedColors.has(color));
     this.availableColors = [...this.allColors];
   }
 
@@ -134,5 +126,7 @@ export class ColorTableComponent{
 
   onSelectRow(index: number) {
     this.activeRowIndex = index;
+    const activeColor = this.selectedColors[index];
+    this.sharedState.setActiveColor(activeColor);
   }
 }

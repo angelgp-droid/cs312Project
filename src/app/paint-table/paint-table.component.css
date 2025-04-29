@@ -1,32 +1,37 @@
-.painting-table{
+.painting-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-}
-
-.painting-table th,
-.painting-table td{
+  }
+  
+  .painting-table th,
+  .painting-table td {
     border: 1px solid black;
     padding: 8px;
     text-align: center;
-}
+    width: 40px;
+    height: 40px;
+  }
+  
+  .painting-cell {
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .painting-cell:hover {
+    background-color: #e0e0e0;
+  }
+  
 
-.col-label,
-.row-label{
-    background-color: var(--primary-color);
+  .col-label,
+  .row-label {
+    background-color: #000080; 
     font-weight: bold;
     color: white;
     border: 1px solid white;
-}
-
-.corner-label{
+  }
+  
+  .corner-label {
     background-color: var(--color-over-pink);
-}
-
-.painting-cell{
-    cursor: pointer;
-}
-
-.painting-cell:hover{
-    background-color: #e0e0e0;
-}
+  }
+  

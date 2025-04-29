@@ -4,17 +4,15 @@
       @for (i of rows; track i) {
         <tr>
           <td class="leftColumn" [style.background-color]="selectedColors[i]">
-          <!-- [checked] auto selects/checks the first row radio button
-          source: https://stackoverflow.com/questions/51997557/verify-if-an-input-checkbox-is-checked-in-angular2 -->
             <input
               type="radio"
               name="selectedColor"
               [checked]="activeRowIndex === i"
               (change)="onSelectRow(i)"
             >
-            <select [ngModel] = "selectedColors[i]" (ngModelChange) = "onColorChange(i, $event)">
+            <select [ngModel]="selectedColors[i]" (ngModelChange)="onColorChange(i, $event)">
               @for (color of availableColors; track color) {
-                <option [ngValue]="color" [disabled]="!isColorAvailable(color, i)">{{color}}</option>
+                <option [ngValue]="color" [disabled]="!isColorAvailable(color, i)">{{ color }}</option>
               }
             </select>
           </td>
