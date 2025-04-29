@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-color-selection',
@@ -25,6 +26,19 @@ export class ColorSelectionComponent {
   selectedColor: string = '';
   newColor: string = '';
   selectedColorToRemove: string = '';
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    this.http.get<{ message: string }>('https://cs.colostate.edu:4444/~EID/api.php')
+    .subscribe({
+      next: (response) => {
+        console.log('Server Response:', response.message);
+      },
+      error: (e) => {
+        console.error('Error connecting to database:', e.message || e.statusText);
+      }
+    });
+  }
 
   addColor() {
     if (this.newColor && !this.colors.includes(this.newColor.toLowerCase())) {
