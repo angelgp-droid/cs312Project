@@ -74,11 +74,9 @@ export class ColorTableComponent {
   
     this.rebalanceColors();
     this.updateAvailableColors();
-  
-    // Notify shared state about color update
+
     this.sharedState.updateColor(oldColor, newColor);
   
-    // 🔥 ALSO: if the edited row is active, update the active color!
     if (this.activeRowIndex === index) {
       this.sharedState.setActiveColor(newColor);
     }
