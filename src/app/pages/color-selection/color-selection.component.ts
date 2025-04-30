@@ -19,7 +19,7 @@ export class ColorSelectionComponent {
   selectedColor: string = '';
   newColor: string = '';
   selectedColorToRemove: string = '';
-  endpoint = 'https://cs.colostate.edu:4444/~c837205363/api.php';
+  endpoint = 'https://cs.colostate.edu:4444/~EID/api.php';
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
