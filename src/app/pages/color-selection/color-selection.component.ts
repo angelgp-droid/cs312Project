@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
+interface Color {
+  name: string;
+  hex: string;
+}
 @Component({
   selector: 'app-color-selection',
   standalone: true,
@@ -11,46 +15,31 @@ import { HttpClient } from '@angular/common/http';
   styleUrl: './color-selection.component.css'
 })
 export class ColorSelectionComponent {
-  colors: string[] = [
-    'black',
-    'blue',
-    'brown',
-    'green',
-    'orange',
-    'pink',
-    'purple',
-    'red',
-    'teal',
-    'yellow'
-  ];
+  colors: Color[] = [];
   selectedColor: string = '';
   newColor: string = '';
   selectedColorToRemove: string = '';
+  endpoint = 'https://cs.colostate.edu:4444/~c837205363/api.php';
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
-    this.http.get<{ message: string }>('https://cs.colostate.edu:4444/~EID/api.php')
-    .subscribe({
-      next: (response) => {
-        console.log('Server Response:', response.message);
+    this.http.get<any>(this.endpoint).subscribe({
+      next: (res) => {
+        console.log('Full API response:', res);
+        this.colors = res.colors || [];
       },
-      error: (e) => {
-        console.error('Error connecting to database:', e.message || e.statusText);
+      error: (err) => {
+        console.error('Failed to fetch colors:', err.message || err.statusText);
       }
     });
   }
+  
 
   addColor() {
-    if (this.newColor && !this.colors.includes(this.newColor.toLowerCase())) {
-      this.colors.push(this.newColor.toLowerCase());
-      this.newColor = '';
-    }
+
   }
   
   removeColor(color: string) {
-    this.colors = this.colors.filter(c => c !== color);
-    if (this.selectedColor === color) {
-      this.selectedColor = '';
-    }
+    
   }
 }

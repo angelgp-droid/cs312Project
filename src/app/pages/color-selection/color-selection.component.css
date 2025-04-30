@@ -69,3 +69,12 @@ button{
     border-radius: 5px;
     text-align: center;
 }
+
+.color-hex {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    border: 1px solid #000;
+    vertical-align: middle;
+  }

@@ -24,7 +24,7 @@
                   required
                   class="form-select">
             @for (color of colors; track color) {
-              <option [value]="color">{{color}}</option>
+              <option [value]="color.name">{{color.name}}</option>
             }
           </select>
           <button type="submit" class="remove-button">Remove Color</button>
@@ -34,10 +34,11 @@
     <div class="color-list">
         <h3>Available Colors</h3>
         <ul>
-          @for (color of colors; track color) {
+          @for (color of colors; track color.name) {
             <li>
               <div class="color-item">
-                <span class="color-name">{{color}}</span>
+                <span class="color-hex" [style.background]="color.hex"></span>
+                <span class="color-name">{{ color.name }} ({{ color.hex }})</span>
               </div>
             </li>
           }
