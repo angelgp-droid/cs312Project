@@ -9,7 +9,6 @@
             <input
               type="radio"
               name="selectedColor"
-              [checked]="activeRowIndex === i"
               (change)="onSelectRow(i)"
             >
             <select [ngModel]="selectedColors[i]" (ngModelChange)="onColorChange(i, $event)">
