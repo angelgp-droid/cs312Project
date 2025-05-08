@@ -15,7 +15,7 @@
         [(ngModel)]="rows"
         [class.invalid]="!isRowValid()"
       >
-    <button type="rowSubmit">Submit </button>
+    <button type="Submit">Submit </button>
     @if (!isRowValid()) {
         <div class="error">
             Invalid input! Try again make sure to enter a whole number between 1-1000
@@ -35,7 +35,7 @@
         [(ngModel)]="columns"
         [class.invalid]="!isColValid()"
       >
-      <button type="colSubmit">Submit </button>
+      <button type="Submit">Submit </button>
     @if (!isColValid()) {
         <div class="error">
             Invalid input! Try again make sure to enter a whole number between 1-702
