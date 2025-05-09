@@ -87,8 +87,8 @@ switch ($method) {
             $name = trim($data['name']);
             $hex = trim($data['hex']);
             
-            // Validate hex format
-            if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $hex)) {//if is normal expected output
+            // Validate hex code format
+            if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $hex)) {
                 http_response_code(400);
                 echo json_encode(["message" => "Invalid hex color code. Must be in format #RRGGBB."]);
                 break;
@@ -97,9 +97,9 @@ switch ($method) {
             // Check if there's enough data
             if (empty($name) || empty($hex)) {
                 http_response_code(400);
-                echo json_encode(["message" => "Color name & hex value are required."]);
+                echo json_encode(["message" => "Color name and hex value are required."]);
                 break;
-            }
+            }       
             try {
                 $stmt = $conn->prepare("INSERT INTO colors (name, hex) VALUES (?, ?)");
                 $stmt->bind_param("ss", $name, $hex);
@@ -130,12 +130,16 @@ switch ($method) {
                 http_response_code(500);
                 echo json_encode(["message" => "Failed to add color: " . $e->getMessage()]);
             }
+        } else {
+            http_response_code(400);
+            echo json_encode(["message" => "Color name and hex value are required."]);
         }
         break;
-        case 'PUT':
-    // Edit existing color
+
+    case 'PUT':
+    //TODO: Edit existing color (interface two)
     case 'DELETE':
-        // Delete color
+    //TODO: Delete color (interface three)
 
 
 //json object
