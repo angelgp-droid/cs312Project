@@ -5,6 +5,7 @@
 //if not error will be output Http failure response for https://cs.colostate.edu:4444/~EID/api.php: 404 Not Found or similar 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header("content-type: application/json");
 $servername = "faure";
 $username = "";
@@ -55,6 +56,11 @@ if ($row['count'] == 0) {
     }
     $stmt->close();
 }
+
+// Handle different HTTP methods
+$method = $_SERVER['REQUEST_METHOD'];
+$data = json_decode(file_get_contents("php://input"), true);
+
 
 //fetch colors
 $colors = [];
