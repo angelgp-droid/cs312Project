@@ -61,18 +61,33 @@ if ($row['count'] == 0) {
 $method = $_SERVER['REQUEST_METHOD'];
 $data = json_decode(file_get_contents("php://input"), true);
 
+switch ($method) {
+    case 'GET':
+        // Fetch colors
+        $colors = [];
+        $result = $conn->query("SELECT id, name, hex FROM colors ORDER BY name ASC");
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $colors[] = [
+                    "id" => $row['id'],
+                    "name" => $row['name'],
+                    "hex" => $row['hex']
+                ];
+            }
+        }
+        
+        echo json_encode([
+            "message" => "Connection successful",
+            "colors" => $colors
+        ]);
+        break;
+    case 'POST':
+        // Add new color
+    case 'PUT':
+    // Edit existing color
+    case 'DELETE':
+        // Delete color
 
-//fetch colors
-$colors = [];
-$result = $conn->query("SELECT name, hex FROM colors ORDER BY name ASC");
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $colors[] = [
-            "name" => $row['name'],
-            "hex" => $row['hex']
-        ];
-    }
-}
 
 //json object
 echo json_encode([
