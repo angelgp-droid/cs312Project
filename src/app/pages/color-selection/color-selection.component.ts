@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 interface Color {
   name: string;
@@ -16,10 +16,23 @@ interface Color {
 })
 export class ColorSelectionComponent {
   colors: Color[] = [];
-  selectedColor: string = '';
-  newColor: string = '';
-  selectedColorToRemove: string = '';
+
+  errorMessage: string = '';
+  successMessage: string = '';
+  
+  newColorName: string = '';
+  newColorHex: string = '#000000';
+  
+  editMode: boolean = false;
+  colorToEdit: Color | null = null;
+  editColorName: string = '';
+  editColorHex: string = '';
+
+  deleteMode: boolean = false;
+  colorToDelete: Color | null = null;
+  
   endpoint = 'https://cs.colostate.edu:4444/~EID/api.php';
+  
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
@@ -36,7 +49,10 @@ export class ColorSelectionComponent {
   
 
   addColor() {
-
+    //first validate input
+    //then condition the input values (trim and conbine)
+    //then make a post
+    //reload the colors and reset the form
   }
   
   removeColor(color: string) {
