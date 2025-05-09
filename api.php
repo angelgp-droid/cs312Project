@@ -112,6 +112,18 @@ switch ($method) {
                         "name" => $name,
                         "hex" => $hex
                     ]);
+                } else {
+                    $error = $conn->error;
+                    if (strpos($error, 'Duplicate entry') !== false) {
+                        if (strpos($error, 'name') !== false) {
+                            echo json_encode(["message" => "Color name already exists."]);
+                        } else {
+                            echo json_encode(["message" => "Color hex value already exists."]);
+                        }
+                    } else {
+                        http_response_code(500);
+                        echo json_encode(["message" => "Failed to add color: " . $error]);
+                    }
                 }
                 $stmt->close();
             } catch (Exception $e) {
