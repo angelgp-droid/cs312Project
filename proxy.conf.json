@@ -1,0 +1,8 @@
+{
+  "/api.php": {
+    "target": "https://cs.colostate.edu:4444/~nathanjb",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

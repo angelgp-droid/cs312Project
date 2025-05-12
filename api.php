@@ -5,9 +5,9 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header("content-type: application/json");
 
 $servername = "faure";
-$username = "";       
+$username = "nathanjb";       
 $password = "";    
-$db = "";               
+$db = "nathanjb";               
 
 $conn = new mysqli($servername, $username, $password, $db);
 
