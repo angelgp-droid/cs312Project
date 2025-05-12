@@ -12,6 +12,23 @@
                required>
         <button type="submit" class="add-button">Add Color</button>
       </div>
+      <div class="form-group">
+        <label for="newColorHexInput">Hex Value:</label>
+        <input type="text" id="newColorHexInput"
+               [(ngModel)]="newColorHex"
+               name="newColorHex"
+               placeholder="Enter hex value (e.g., #RRGGBB)"
+               pattern="^#[0-9A-Fa-f]{6}$"
+               required>
+        <button type="submit" class="add-button">Add Color</button>
+      </div>
+      <!-- Display messages -->
+      @if (successMessage) {
+        <p class="success-message">{{ successMessage }}</p>
+      }
+      @if (errorMessage) {
+        <p class="error-message">{{ errorMessage }}</p>
+      }
     </form>
 
     <form (ngSubmit)="removeColor(selectedColorToRemove)" class="color-form">
