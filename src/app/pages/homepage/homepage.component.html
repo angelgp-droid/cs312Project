@@ -44,8 +44,29 @@
   </form>
 
   <form (ngSubmit)="onColorSubmit()">
-    <button type="submit" [disabled]="availableColors.length === 0">Generate Color Table</button>
+    <label for="colorCount">
+      Number of Colors (1 - {{ availableColors.length }}):
+    </label>
+    <input
+      type="number"
+      id="colorCount"
+      name="colorCount"
+      [(ngModel)]="colorCount"
+      [min]="1"
+      [max]="availableColors.length"
+      [class.invalid]="!isColorCountValid()"
+      required
+    />
+    <button type="submit" [disabled]="availableColors.length === 0">Submit</button>
+  
+    @if (!isColorCountValid()) {
+      <div class="error">
+        Invalid input! Please enter a number between 1 and {{ availableColors.length }}.
+      </div>
+    }
   </form>
+  
+  
 </div>
   
 
@@ -53,7 +74,7 @@
   <h4 class="print-visible">Color Selection Table</h4>
   <p class="print-visible">Table with {{ availableColors.length }} colors</p>
   <div class="colorTable">
-    <app-color-table [colorCount]="availableColors.length"></app-color-table>
+    <app-color-table [colorCount]="colorCount"></app-color-table>
   </div>
 }
 

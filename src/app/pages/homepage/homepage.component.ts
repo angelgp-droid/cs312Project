@@ -29,6 +29,8 @@ export class HomepageComponent {
   rowSubmitCount = 0;
   colSubmitCount = 0;
   colorSubmitCount = 0;
+  colorCount: number = 1;
+
 
 
   availableColors: string[] = [];
@@ -51,11 +53,20 @@ export class HomepageComponent {
   }
 
   generateColorTable() {
-    if (this.availableColors.length > 0) {
+    if (this.availableColors.length > 0 && this.colorCount >= 1 && this.colorCount <= this.availableColors.length) {
       this.colorSubmitCount++;
       this.showColorTable = true;
     }
   }
+  
+  isColorCountValid(): boolean {
+    return (
+      this.colorCount >= 1 &&
+      this.colorCount <= this.availableColors.length &&
+      Number.isInteger(this.colorCount)
+    );
+  }
+  
 
   isRowValid(): boolean {
     if (this.rowSubmitCount === 0) return true;
