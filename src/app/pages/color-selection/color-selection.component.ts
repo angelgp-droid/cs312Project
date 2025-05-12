@@ -33,7 +33,7 @@ export class ColorSelectionComponent {
   deleteMode: boolean = false;
   colorToDelete: Color | null = null;
   
-  endpoint = 'https://cs.colostate.edu:4444/~EID/cs312Project/api.php';
+  endpoint = 'https://cs.colostate.edu:4444/~gman0770/cs312Project/api.php';
   
   constructor(private http: HttpClient) {}
 
