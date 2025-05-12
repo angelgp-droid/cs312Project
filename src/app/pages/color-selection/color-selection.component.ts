@@ -32,7 +32,7 @@ export class ColorSelectionComponent {
   editColorName: string = '';
   editColorHex: string = '';
 
-  endpoint = 'https://cs.colostate.edu:4444/~EID/api.php';
+  endpoint = '/api.php';
 
   constructor(private http: HttpClient) {}
 
