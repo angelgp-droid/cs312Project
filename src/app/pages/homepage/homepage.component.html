@@ -41,39 +41,21 @@
             Invalid input! Try again make sure to enter a whole number between 1-702
         </div>
       }
- 
   </form>
 
   <form (ngSubmit)="onColorSubmit()">
-    <label>
-      Color (1-10):
-    </label>
-      <input 
-        type="number" 
-        name="color"
-        min = 1
-        max = 10
-        [(ngModel)]="color"
-        [class.invalid]="!isColorValid()"
-      >
-    <button type="colorSubmit">Submit </button>
-    @if (!isColorValid()) {
-        <div class="error">
-            Invalid input! Try again make sure to enter a whole number between 1-10
-        </div>
-      }
- 
+    <button type="submit" [disabled]="availableColors.length === 0">Generate Color Table</button>
   </form>
 </div>
   
 
 @if (shouldShowColorTable()) {
-      <h4 class = "print-visible">Color Selection Table</h4>
-      <p class = "print-visible">Table with {{color}} colors</p>
-    <div class="colorTable">  
-      <app-color-table [colorCount]="color"></app-color-table>
-    </div>
-  }
+  <h4 class="print-visible">Color Selection Table</h4>
+  <p class="print-visible">Table with {{ availableColors.length }} colors</p>
+  <div class="colorTable">
+    <app-color-table [colorCount]="availableColors.length"></app-color-table>
+  </div>
+}
 
   @if (rowIsSubmitted && colIsSubmitted && isRowValid() && isColValid()){
       <h4 class = "print-visible">Color Painting Table</h4>

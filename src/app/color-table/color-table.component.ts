@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaintTableComponent } from '../paint-table/paint-table.component';
 import { SharedStateService } from '../shared-state.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-color-table',
@@ -20,13 +21,23 @@ export class ColorTableComponent {
   selectedCells: string[][] = [];
   activeRowIndex: number = 0;
 
-  constructor(private sharedState: SharedStateService) {}
+  constructor(private sharedState: SharedStateService, private http: HttpClient) {}
 
-  allColors: string[] = [
-    'black', 'blue', 'brown', 'green', 'orange', 'pink', 'purple', 'red', 'teal', 'yellow'
-  ];
+  allColors: string[] = [];
 
   ngOnInit() {
+    this.http.get<any>('/api.php').subscribe({
+    next: (res) => {
+      this.allColors = res.colors.map((c: any) => c.name); 
+      this.initializeSelectedColors();
+    },
+    error: (err) => {
+      console.error('Failed to load colors from DB:', err);
+      this.allColors = ['black', 'blue', 'brown', 'green', 'orange', 'pink', 'purple', 'red', 'teal', 'yellow'];
+      this.initializeSelectedColors(); 
+    }
+  });
+    
     this.sharedState.selectedCell$.subscribe(selection => {
       if (selection) {
         const { cell } = selection;
