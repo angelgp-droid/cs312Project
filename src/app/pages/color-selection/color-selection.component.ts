@@ -77,20 +77,21 @@ export class ColorSelectionComponent {
 
   removeColor(colorName: string) {
     this.clearMessages();
-
+  
     const color = this.colors.find(c => c.name === colorName);
     if (!color) {
       this.errorMessage = 'Color not found.';
       return;
     }
-
+  
     if (this.colors.length <= 2) {
       this.errorMessage = 'At least two colors must remain.';
       return;
     }
-
-    this.http.request<any>('DELETE', this.endpoint, {
-      body: { id: color.id }
+  
+    this.http.post<any>(this.endpoint, {
+      action: 'delete',
+      id: color.id
     }).subscribe({
       next: () => {
         this.successMessage = 'Color removed.';
@@ -102,6 +103,7 @@ export class ColorSelectionComponent {
       }
     });
   }
+  
 
   startEdit(color: Color) {
     this.editMode = true;

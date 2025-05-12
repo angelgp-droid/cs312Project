@@ -1,13 +1,18 @@
 <?php
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header("content-type: application/json");
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+header('Content-Type: application/json');
+
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
 
 $servername = "faure";
-$username = "nathanjb";       
-$password = "";    
-$db = "nathanjb";               
+$username = "c837205363";
+$password = "";
+$db = "c837205363";
 
 $conn = new mysqli($servername, $username, $password, $db);
 
@@ -26,20 +31,26 @@ $defaultColors = [
 
 if ($conn->connect_error) {
     http_response_code(500);
-    echo json_encode(["message" => "Connection failed: " . $conn->connect_error]);
+    echo json_encode([
+        "message" => "Connection failed: " . $conn->connect_error,
+        "colors" => []
+    ]);
     exit;
 }
 
+// Create table if not exists
 $conn->query("
     CREATE TABLE IF NOT EXISTS colors (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(50) UNIQUE NOT NULL,
-        hex VARCHAR(7) UNIQUE NOT NULL
+        hex VARCHAR(7) NOT NULL
     )
 ");
 
+// Insert default colors if table is empty
 $result = $conn->query("SELECT COUNT(*) AS count FROM colors");
 $row = $result->fetch_assoc();
+
 if ($row['count'] == 0) {
     $stmt = $conn->prepare("INSERT INTO colors (name, hex) VALUES (?, ?)");
     foreach ($defaultColors as [$name, $hex]) {
@@ -56,110 +67,105 @@ switch ($method) {
     case 'GET':
         $colors = [];
         $result = $conn->query("SELECT id, name, hex FROM colors ORDER BY name ASC");
-        while ($row = $result->fetch_assoc()) {
-            $colors[] = $row;
+        if ($result && $result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $colors[] = [
+                    "id" => $row['id'],
+                    "name" => $row['name'],
+                    "hex" => $row['hex']
+                ];
+            }
         }
-        echo json_encode(["message" => "Fetched colors", "colors" => $colors]);
+
+        echo json_encode([
+            "message" => "Connection successful",
+            "colors" => $colors
+        ]);
         break;
 
     case 'POST':
+        // Simulate DELETE
+        if (isset($data['action']) && $data['action'] === 'delete') {
+            if (isset($data['id'])) {
+                $id = intval($data['id']);
+                $countResult = $conn->query("SELECT COUNT(*) AS count FROM colors");
+                $countRow = $countResult->fetch_assoc();
+
+                if ($countRow['count'] <= 2) {
+                    echo json_encode(["message" => "Cannot delete color. At least two colors must remain."]);
+                    break;
+                }
+
+                $stmt = $conn->prepare("DELETE FROM colors WHERE id = ?");
+                $stmt->bind_param("i", $id);
+                $stmt->execute();
+
+                if ($stmt->affected_rows > 0) {
+                    echo json_encode(["message" => "Color deleted."]);
+                } else {
+                    http_response_code(400);
+                    echo json_encode(["message" => "Color not found or already deleted."]);
+                }
+
+                $stmt->close();
+            } else {
+                http_response_code(400);
+                echo json_encode(["message" => "Missing color id for deletion."]);
+            }
+            break;
+        }
+
+        // Add new color
         if (isset($data['name']) && isset($data['hex'])) {
             $name = trim($data['name']);
             $hex = trim($data['hex']);
 
             if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $hex)) {
                 http_response_code(400);
-                echo json_encode(["message" => "Invalid hex color code."]);
+                echo json_encode(["message" => "Invalid hex color code. Must be in format #RRGGBB."]);
                 break;
             }
 
-            $stmt = $conn->prepare("INSERT INTO colors (name, hex) VALUES (?, ?)");
-            $stmt->bind_param("ss", $name, $hex);
-            $result = $stmt->execute();
+            if (empty($name) || empty($hex)) {
+                http_response_code(400);
+                echo json_encode(["message" => "Color name and hex value are required."]);
+                break;
+            }
 
-            if ($result) {
-                echo json_encode(["message" => "Color added", "id" => $conn->insert_id]);
-            } else {
-                if (strpos($conn->error, 'Duplicate') !== false) {
-                    echo json_encode(["message" => "Color name or hex value already exists."]);
+            try {
+                $stmt = $conn->prepare("INSERT INTO colors (name, hex) VALUES (?, ?)");
+                $stmt->bind_param("ss", $name, $hex);
+                $result = $stmt->execute();
+
+                if ($result) {
+                    echo json_encode([
+                        "message" => "Color added successfully",
+                        "id" => $conn->insert_id,
+                        "name" => $name,
+                        "hex" => $hex
+                    ]);
                 } else {
-                    http_response_code(500);
-                    echo json_encode(["message" => "Error: " . $conn->error]);
+                    $error = $conn->error;
+                    if (strpos($error, 'Duplicate entry') !== false) {
+                        if (strpos($error, 'name') !== false) {
+                            echo json_encode(["message" => "Color name already exists."]);
+                        } else {
+                            echo json_encode(["message" => "Color hex value already exists."]);
+                        }
+                    } else {
+                        http_response_code(500);
+                        echo json_encode(["message" => "Failed to add color: " . $error]);
+                    }
                 }
-            }
-            $stmt->close();
-        } else {
-            http_response_code(400);
-            echo json_encode(["message" => "Missing name or hex value."]);
-        }
-        break;
 
-    case 'PUT':
-        if (isset($data['id'], $data['name'], $data['hex'])) {
-            $id = intval($data['id']);
-            $name = trim($data['name']);
-            $hex = trim($data['hex']);
-
-            if (!preg_match('/^#[0-9A-Fa-f]{6}$/', $hex)) {
-                http_response_code(400);
-                echo json_encode(["message" => "Invalid hex color code."]);
-                break;
-            }
-
-            $check = $conn->prepare("SELECT id FROM colors WHERE (name = ? OR hex = ?) AND id != ?");
-            $check->bind_param("ssi", $name, $hex, $id);
-            $check->execute();
-            $check->store_result();
-
-            if ($check->num_rows > 0) {
-                echo json_encode(["message" => "Color name or hex value already exists."]);
-                break;
-            }
-
-            $stmt = $conn->prepare("UPDATE colors SET name = ?, hex = ? WHERE id = ?");
-            $stmt->bind_param("ssi", $name, $hex, $id);
-            $stmt->execute();
-
-            if ($stmt->affected_rows >= 0) {
-                echo json_encode(["message" => "Color updated."]);
-            } else {
+                $stmt->close();
+            } catch (Exception $e) {
                 http_response_code(500);
-                echo json_encode(["message" => "Failed to update color."]);
+                echo json_encode(["message" => "Failed to add color: " . $e->getMessage()]);
             }
-
-            $stmt->close();
         } else {
             http_response_code(400);
-            echo json_encode(["message" => "Missing id, name, or hex value."]);
-        }
-        break;
-
-    case 'DELETE':
-        if (isset($data['id'])) {
-            $id = intval($data['id']);
-            $countResult = $conn->query("SELECT COUNT(*) AS count FROM colors");
-            $countRow = $countResult->fetch_assoc();
-
-            if ($countRow['count'] <= 2) {
-                echo json_encode(["message" => "Cannot delete color. At least two colors must remain."]);
-                break;
-            }
-
-            $stmt = $conn->prepare("DELETE FROM colors WHERE id = ?");
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-
-            if ($stmt->affected_rows > 0) {
-                echo json_encode(["message" => "Color deleted."]);
-            } else {
-                http_response_code(400);
-                echo json_encode(["message" => "Color not found or already deleted."]);
-            }
-
-            $stmt->close();
-        } else {
-            http_response_code(400);
-            echo json_encode(["message" => "Missing color id for deletion."]);
+            echo json_encode(["message" => "Color name and hex value are required."]);
         }
         break;
 
