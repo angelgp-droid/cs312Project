@@ -1,47 +1,96 @@
 <div class="color-selection">
-    <h2>Color Selection</h2>
-  
-    <form (ngSubmit)="addColor()" class="color-form">
-      <h3>Add New Color</h3>
-      <div class="form-group">
-        <label for="newColorInput">Color Name:</label>
-        <input type="text" id="newColorInput" 
-               [(ngModel)]="newColor" 
-               name="newColor"
-               placeholder="Enter color name"
-               required>
-        <button type="submit" class="add-button">Add Color</button>
-      </div>
-    </form>
+  <h2>Color Selection</h2>
 
-    <form (ngSubmit)="removeColor(selectedColorToRemove)" class="color-form">
-        <h3>Remove Color</h3>
-        <div class="form-group">
-          <label for="colorToRemove">Select Color to Remove:</label>
-          <select id="colorToRemove"
-                  [(ngModel)]="selectedColorToRemove"
-                  name="selectedColorToRemove"
-                  required
-                  class="form-select">
-            @for (color of colors; track color) {
-              <option [value]="color.name">{{color.name}}</option>
-            }
-          </select>
-          <button type="submit" class="remove-button">Remove Color</button>
-        </div>
-      </form>
-  
-    <div class="color-list">
-        <h3>Available Colors</h3>
-        <ul>
-          @for (color of colors; track color.name) {
-            <li>
-              <div class="color-item">
-                <span class="color-hex" [style.background]="color.hex"></span>
-                <span class="color-name">{{ color.name }} ({{ color.hex }})</span>
-              </div>
-            </li>
-          }
-        </ul>
-      </div>
+  <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <form (ngSubmit)="addColor()" class="color-form">
+    <h3>Add New Color</h3>
+    <div class="form-group">
+      <label for="newColor">Color Name:</label>
+      <input
+        type="text"
+        id="newColor"
+        [(ngModel)]="newColor"
+        name="newColor"
+        placeholder="Enter color name"
+        required
+      />
+
+      <label for="newColorHex">Hex Code:</label>
+      <input
+        type="color"
+        id="newColorHex"
+        [(ngModel)]="newColorHex"
+        name="newColorHex"
+        required
+      />
+
+      <button type="submit" class="add-button">Add Color</button>
+    </div>
+  </form>
+
+  <form (ngSubmit)="removeColor(selectedColorToRemove)" class="color-form">
+    <h3>Remove Color</h3>
+    <div class="form-group">
+      <label for="colorToRemove">Select Color to Remove:</label>
+      <select
+        id="colorToRemove"
+        [(ngModel)]="selectedColorToRemove"
+        name="selectedColorToRemove"
+        required
+        class="form-select"
+      >
+        <option *ngFor="let color of colors" [value]="color.name">
+          {{ color.name }}
+        </option>
+      </select>
+      <button type="submit" class="remove-button">Remove Color</button>
+    </div>
+  </form>
+
+  <div *ngIf="editMode" class="edit-form">
+    <h3>Edit Color</h3>
+    <div class="form-group">
+      <label for="editColorName">Name:</label>
+      <input
+        type="text"
+        id="editColorName"
+        [(ngModel)]="editColorName"
+        name="editColorName"
+        required
+      />
+
+      <label for="editColorHex">Hex Code:</label>
+      <input
+        type="color"
+        id="editColorHex"
+        [(ngModel)]="editColorHex"
+        name="editColorHex"
+        required
+      />
+
+      <button (click)="updateColor()">Update</button>
+      <button (click)="cancelEdit()" type="button">Cancel</button>
+    </div>
   </div>
+
+  <div class="color-list">
+    <h3>Available Colors</h3>
+    <ul>
+      <li *ngFor="let color of colors">
+        <div class="color-item">
+          <span
+            class="color-hex"
+            [style.background]="color.hex"
+            title="{{ color.hex }}"
+          ></span>
+          <span class="color-name">
+            {{ color.name }} ({{ color.hex }})
+          </span>
+          <button (click)="startEdit(color)">Edit</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
