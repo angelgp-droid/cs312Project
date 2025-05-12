@@ -20,7 +20,7 @@
     <!-- Delete Color Form -->
     <div *ngIf="deleteMode">
       <p>Are you sure you want to delete {{ colorToDelete?.name }}?</p>
-      <button (click)="removeColor()">Yes</button>
+      <button (click)="colorToDelete?.name && removeColor(colorToDelete.name)">Yes</button> <!-- Ensure name is defined -->
       <button (click)="deleteMode = false">No</button>
     </div>
 
@@ -33,9 +33,7 @@
                   name="selectedColorToRemove"
                   required
                   class="form-select">
-            @for (color of colors; track color) {
-              <option [value]="color.name">{{color.name}}</option>
-            }
+            <option *ngFor="let color of colors" [value]="color.name">{{ color.name }}</option>
           </select>
           <button type="submit" class="remove-button">Remove Color</button>
         </div>

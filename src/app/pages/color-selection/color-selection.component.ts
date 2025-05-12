@@ -17,6 +17,7 @@ interface Color {
 })
 export class ColorSelectionComponent {
   colors: Color[] = [];
+  selectedColorToRemove: string = ''; // Add this property
 
   errorMessage: string = '';
   successMessage: string = '';
@@ -32,7 +33,7 @@ export class ColorSelectionComponent {
   deleteMode: boolean = false;
   colorToDelete: Color | null = null;
   
-  endpoint = 'https://cs.colostate.edu:4444/~gman0770/cs312Project/api.php';
+  endpoint = 'https://cs.colostate.edu:4444/~EID/cs312Project/api.php';
   
   constructor(private http: HttpClient) {}
 
@@ -85,10 +86,14 @@ export class ColorSelectionComponent {
     });
   }
 
-  removeColor() {
-    if (!this.colorToDelete) return;
+  removeColor(colorName: string) { // Accept a color name as a parameter
+    const colorToDelete = this.colors.find(color => color.name === colorName);
+    if (!colorToDelete) {
+      this.errorMessage = 'Color not found.';
+      return;
+    }
 
-    const deleteUrl = `${this.endpoint}?id=${this.colorToDelete.id}`;
+    const deleteUrl = `${this.endpoint}?id=${colorToDelete.id}`;
 
     this.http.delete(deleteUrl).subscribe({
       next: () => {
