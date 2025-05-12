@@ -1,35 +1,28 @@
 <div class="color-selection">
     <h2>Color Selection</h2>
   
-    <form (ngSubmit)="addColor()" class="color-form">
-      <h3>Add New Color</h3>
-      <div class="form-group">
-        <label for="newColorInput">Color Name:</label>
-        <input type="text" id="newColorInput" 
-               [(ngModel)]="newColor" 
-               name="newColor"
-               placeholder="Enter color name"
-               required>
-        <button type="submit" class="add-button">Add Color</button>
-      </div>
-      <div class="form-group">
-        <label for="newColorHexInput">Hex Value:</label>
-        <input type="text" id="newColorHexInput"
-               [(ngModel)]="newColorHex"
-               name="newColorHex"
-               placeholder="Enter hex value (e.g., #RRGGBB)"
-               pattern="^#[0-9A-Fa-f]{6}$"
-               required>
-        <button type="submit" class="add-button">Add Color</button>
-      </div>
-      <!-- Display messages -->
-      @if (successMessage) {
-        <p class="success-message">{{ successMessage }}</p>
-      }
-      @if (errorMessage) {
-        <p class="error-message">{{ errorMessage }}</p>
-      }
+    <!-- Add Color Form -->
+    <form (ngSubmit)="addColor()">
+      <input type="text" [(ngModel)]="newColorName" placeholder="Color Name" required />
+      <input type="text" [(ngModel)]="newColorHex" placeholder="Hex Value" required />
+      <button type="submit">Add Color</button>
     </form>
+
+    <!-- Edit Color Form -->
+    <div *ngIf="editMode">
+      <form (ngSubmit)="editColor()">
+        <input type="text" [(ngModel)]="editColorName" placeholder="New Color Name" required />
+        <input type="text" [(ngModel)]="editColorHex" placeholder="New Hex Value" required />
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
+
+    <!-- Delete Color Form -->
+    <div *ngIf="deleteMode">
+      <p>Are you sure you want to delete {{ colorToDelete?.name }}?</p>
+      <button (click)="removeColor()">Yes</button>
+      <button (click)="deleteMode = false">No</button>
+    </div>
 
     <form (ngSubmit)="removeColor(selectedColorToRemove)" class="color-form">
         <h3>Remove Color</h3>

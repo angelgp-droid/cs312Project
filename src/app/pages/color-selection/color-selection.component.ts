@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 interface Color {
+  id: number;
   name: string;
   hex: string;
 }
@@ -31,7 +32,7 @@ export class ColorSelectionComponent {
   deleteMode: boolean = false;
   colorToDelete: Color | null = null;
   
-  endpoint = 'https://cs.colostate.edu:4444/~EID/api.php';
+  endpoint = 'https://cs.colostate.edu:4444/~gman0770/cs312Project/api.php';
   
   constructor(private http: HttpClient) {}
 
@@ -47,15 +48,59 @@ export class ColorSelectionComponent {
     });
   }
   
-
   addColor() {
-    //first validate input
-    //then condition the input values (trim and conbine)
-    //then make a post
-    //reload the colors and reset the form
+    const newColor = { name: this.newColorName.trim(), hex: this.newColorHex.trim() };
+
+    this.http.post(this.endpoint, newColor).subscribe({
+      next: () => {
+        this.successMessage = 'Color added successfully!';
+        this.errorMessage = '';
+        this.newColorName = '';
+        this.newColorHex = '#000000';
+        this.ngOnInit(); // Reload colors
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Failed to add color.';
+        this.successMessage = '';
+      }
+    });
   }
-  
-  removeColor(color: string) {
-    
+
+  editColor() {
+    if (!this.colorToEdit) return;
+
+    const updatedColor = { id: this.colorToEdit.id, name: this.editColorName.trim(), hex: this.editColorHex.trim() };
+
+    this.http.put(this.endpoint, updatedColor).subscribe({
+      next: () => {
+        this.successMessage = 'Color updated successfully!';
+        this.errorMessage = '';
+        this.editMode = false;
+        this.ngOnInit(); // Reload colors
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Failed to update color.';
+        this.successMessage = '';
+      }
+    });
+  }
+
+  removeColor() {
+    if (!this.colorToDelete) return;
+
+    const deleteUrl = `${this.endpoint}?id=${this.colorToDelete.id}`;
+
+    this.http.delete(deleteUrl).subscribe({
+      next: () => {
+        this.successMessage = 'Color deleted successfully!';
+        this.errorMessage = '';
+        this.deleteMode = false;
+        this.ngOnInit(); // Reload colors
+      },
+      error: (err) => {
+        this.errorMessage = err.error.message || 'Failed to delete color.';
+        this.successMessage = '';
+      }
+    });
   }
 }
